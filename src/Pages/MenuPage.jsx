@@ -3,13 +3,19 @@ import Navbar from "../components/Navbar"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { getMenu } from "../ReduxToolkit/features/menu/menuSlice"
+import useMenu from "../hooks/useMenu"
 
 const MenuPage = () => {
 
     const dispatch = useDispatch()
     const { menuReducer } = useSelector(state => state)
 
-    console.log("menuReducer", menuReducer)
+    const { menu, loading, error } = useMenu()
+
+    console.log("menu dari custom hooks", menu);
+    
+
+    // console.log("menuReducer", menuReducer)
 
     useEffect(() => {
         dispatch(getMenu())
@@ -38,6 +44,29 @@ const MenuPage = () => {
                     )
                 })
             }
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<h1>Dari custom hooks</h1>
+            {
+                loading ? <h1>Loading...</h1> : 
+                    menu.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <h3>{item.name}</h3>
+                                {/* <p>{item.description}</p> */}
+                                {/* <p>{item.price}</p> */}
+                            </div>
+                        )
+                    })
+                
+            }
+
         </div>
     )
 }
